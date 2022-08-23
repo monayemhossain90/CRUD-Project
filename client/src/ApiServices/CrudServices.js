@@ -31,7 +31,7 @@ export function Create(ProductName,ProductCode,Img, UnitPrice, Qty,TotalPrice) {
 // Read 
 export function Read() {
   let url = "/api/v1/readProduct";
-  return axios.post(url)
+  return axios(url)
     .then((res) => {
         if (res.status===200) {
             return res.data['data'];

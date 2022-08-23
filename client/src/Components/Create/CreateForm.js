@@ -1,5 +1,6 @@
-import React, { useRef } from "react";
+import React, { Fragment, useRef } from "react";
 import { Create } from "../../ApiServices/CrudServices";
+import FullScreenLoader from "../../helper/FullScreenLoader";
 import {
   ErrorToast,
   isEmpty,
@@ -12,7 +13,8 @@ const CreateForm = () => {
     Img,
     UnitPrice,
     Qty,
-    TotalPrice = useRef();
+    TotalPrice,
+    Loader = useRef();
 
   const saveData = () => {
     let Product_Name = ProductName.value;
@@ -37,6 +39,9 @@ const CreateForm = () => {
     } else if (isEmpty(Total_Price)) {
       ErrorToast("Total Price Required");
     } else {
+// loader action start
+      Loader.classList.remove("d-none")
+
       // data create
       Create(
         Product_Name,
@@ -46,6 +51,7 @@ const CreateForm = () => {
         Product_Qty,
         Total_Price
       ).then((result) => {
+        Loader.classList.add("d-none")
         if (result === true) {
           SuccessToast("Data saved success");
           ProductName.value = "";
@@ -54,6 +60,8 @@ const CreateForm = () => {
           UnitPrice.value = "";
           Qty.value = "";
           TotalPrice.value = "";
+
+      
         } else {
           ErrorToast("Request failed");
         }
@@ -62,69 +70,75 @@ const CreateForm = () => {
   };
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-4 p-2">
-          <label>Product Name</label>
-          <input
-            ref={(input) => (ProductName = input)}
-            type="text"
-            class="form-control"
-          />
+    <Fragment>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-4 p-2">
+            <label>Product Name</label>
+            <input
+              ref={(input) => (ProductName = input)}
+              type="text"
+              class="form-control"
+            />
+          </div>
+          <div className="col-md-4 p-2">
+            <label>Product Code</label>
+            <input
+              ref={(input) => (ProductCode = input)}
+              type="text"
+              class="form-control"
+            />
+          </div>
+          <div className="col-md-4 p-2">
+            <label>Product Image</label>
+            <input
+              ref={(input) => (Img = input)}
+              type="text"
+              class="form-control"
+            />
+          </div>
+          <div className="col-md-4 p-2">
+            <label>Unit Price</label>
+            <input
+              ref={(input) => (UnitPrice = input)}
+              type="text"
+              class="form-control"
+            />
+          </div>
+          <div className="col-md-4 p-2">
+            <label>Quantity</label>
+            <input
+              ref={(input) => (Qty = input)}
+              type="text"
+              class="form-control"
+            />
+          </div>
+          <div className="col-md-4 p-2">
+            <label>Total Price</label>
+            <input
+              ref={(input) => (TotalPrice = input)}
+              type="text"
+              class="form-control"
+            />
+          </div>
         </div>
-        <div className="col-md-4 p-2">
-          <label>Product Code</label>
-          <input
-            ref={(input) => (ProductCode = input)}
-            type="text"
-            class="form-control"
-          />
-        </div>
-        <div className="col-md-4 p-2">
-          <label>Product Image</label>
-          <input
-            ref={(input) => (Img = input)}
-            type="text"
-            class="form-control"
-          />
-        </div>
-        <div className="col-md-4 p-2">
-          <label>Unit Price</label>
-          <input
-            ref={(input) => (UnitPrice = input)}
-            type="text"
-            class="form-control"
-          />
-        </div>
-        <div className="col-md-4 p-2">
-          <label>Quantity</label>
-          <input
-            ref={(input) => (Qty = input)}
-            type="text"
-            class="form-control"
-          />
-        </div>
-        <div className="col-md-4 p-2">
-          <label>Total Price</label>
-          <input
-            ref={(input) => (TotalPrice = input)}
-            type="text"
-            class="form-control"
-          />
+        <br />
+        <div className="row">
+          <div className="col-md-4 p-2 ">
+            <button
+              onClick={saveData}
+              type="button"
+              class="btn btn-primary w-100"
+            >
+              Save
+            </button>
+          </div>
         </div>
       </div>
-      <div className="row">
-        <div className="col-md-4 p-2 ">
-          <button
-            onClick={saveData}
-            type="button"
-            class="btn btn-primary w-100"
-          >
-            Save
-          </button>
-        </div>
+      <div className="d-none" ref={div=>Loader=div}>
+        <FullScreenLoader />
       </div>
-    </div>
+    </Fragment>
   );
 };
 
