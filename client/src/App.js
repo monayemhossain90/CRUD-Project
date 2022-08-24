@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import CreatePage from "./Pages/CreatePage";
 import ReadPage from "./Pages/ReadPage";
@@ -9,11 +9,13 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Routes>
-           <Route path="/" element={<ReadPage />} />
-          <Route path="/create" element={<CreatePage/>} />
-          <Route path="/update" element={<UpdatePage />} />
-        </Routes>
+        <Switch>
+          
+          <Route exact path = "/" render={(props)=><ReadPage {...props} key ={Date.now()} />}  />
+          <Route exact path="/create" render={(props)=><CreatePage {...props} key ={Date.now()} />}  />
+          <Route exact path="/update/:id" render={(props)=><UpdatePage {...props} key ={Date.now()} />} />
+
+        </Switch>
       </BrowserRouter>
     </div>
   );
