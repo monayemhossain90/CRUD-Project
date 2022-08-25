@@ -6,8 +6,7 @@ import UpdateForm from '../Components/Update/UpdateForm';
 
 const UpdatePage =() => {
     const params = useParams();
-    console.log(params)
-  
+     
     return (
         <div>
             

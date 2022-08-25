@@ -7,7 +7,11 @@ import {
   SuccessToast,
 } from "../../helper/ValidationHelper";
 
-const CreateForm = () => {
+import { withRouter } from "react-router";
+
+
+const CreateForm = (props) => {
+  console.log(props)
   let ProductName,
     ProductCode,
     Img,
@@ -54,12 +58,7 @@ const CreateForm = () => {
         Loader.classList.add("d-none")
         if (result === true) {
           SuccessToast("Data saved success");
-          ProductName.value = "";
-          ProductCode.value = "";
-          Img.value = "";
-          UnitPrice.value = "";
-          Qty.value = "";
-          TotalPrice.value = "";
+       props.history.push("")
 
       
         } else {
@@ -142,4 +141,5 @@ const CreateForm = () => {
   );
 };
 
-export default CreateForm;
+export default withRouter(CreateForm) ;
+

@@ -40,7 +40,6 @@ mongoose.connect(URI,OPTIONS,(err)=>{
 })
 
 
-
 // manage Backend API Routing
 app.use("/api/v1",router);
 

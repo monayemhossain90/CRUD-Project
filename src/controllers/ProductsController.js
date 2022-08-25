@@ -17,10 +17,8 @@ exports.insertProduct = (req, res) => {
 // R = Read
 
 exports.readProduct = (req, res) => {
-  let Query = {};
-  let Projection = {};
-
-  ProductsModel.find(Query, Projection, (err, data) => {
+  
+  ProductsModel.find( (err, data) => {
     if (err) {
       res.status(400).json({ status: "Failed", data: err });
     } else {
@@ -34,9 +32,9 @@ exports.readProduct = (req, res) => {
 exports.readProductById = (req, res) => {
   let id = req.params.id;
   let query = { _id: id };
-  let Projection = {};
+ 
 
-  ProductsModel.find(query, Projection, (err, data) => {
+  ProductsModel.find(query, (err, data) => {
     if (err) {
       res.status(400).json({ status: "Failed", data: err });
     } else {

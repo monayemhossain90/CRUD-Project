@@ -1,14 +1,14 @@
 import React, { Fragment, useEffect, useRef } from "react";
 import FullScreenLoader from "../../helper/FullScreenLoader";
-import {ReadById, Update} from "../../ApiServices/CrudServices"
+import { ReadById, Update } from "../../ApiServices/CrudServices";
 import {
   ErrorToast,
   isEmpty,
   SuccessToast,
 } from "../../helper/ValidationHelper";
+import { withRouter } from "react-router";
 
 const UpdateForm = (props) => {
-  
   let ProductName,
     ProductCode,
     Img,
@@ -55,13 +55,8 @@ const UpdateForm = (props) => {
       ).then((result) => {
         Loader.classList.add("d-none");
         if (result === true) {
-          SuccessToast("Data saved success");
-          ProductName.value = "";
-          ProductCode.value = "";
-          Img.value = "";
-          UnitPrice.value = "";
-          Qty.value = "";
-          TotalPrice.value = "";
+          SuccessToast("Data Updated successfully");
+          props.history.push("/");
         } else {
           ErrorToast("Request failed");
         }
@@ -70,17 +65,15 @@ const UpdateForm = (props) => {
   };
 
   // load readById data
-  useEffect(()=>{
+  useEffect(() => {
     ReadById(props.id).then((result) => {
-      ProductName.value = result[0]["ProductName"]
+      ProductName.value = result[0]["ProductName"];
       ProductCode.value = result[0]["ProductCode"];
-    Img.value = result[0]["Img"];
-    UnitPrice.value = result[0]["UnitPrice"];
-    Qty.value =result[0]["Qty"];
-    TotalPrice.value = result[0]["TotalPrice"]
-         
+      Img.value = result[0]["Img"];
+      UnitPrice.value = result[0]["UnitPrice"];
+      Qty.value = result[0]["Qty"];
+      TotalPrice.value = result[0]["TotalPrice"];
     });
-
   });
 
   return (
@@ -153,8 +146,7 @@ const UpdateForm = (props) => {
         <FullScreenLoader />
       </div>
     </Fragment>
-    
   );
 };
 
-export default UpdateForm;
+export default withRouter(UpdateForm);
